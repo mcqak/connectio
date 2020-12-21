@@ -1,6 +1,4 @@
 import React from 'react'
-import '../assets/scss/navbar.scss'
-
 import { 
     Nav,
     NavDropdown,
@@ -8,11 +6,17 @@ import {
     Container
 } from 'react-bootstrap'
 
+import '../assets/scss/navbar.scss'
+
+import logo from '../assets/img/connectio-logo.png'
+
 const MainNav = () => {
     return (
         <Navbar variant="dark" expand="lg">
             <Container>
-                <Navbar.Brand href="#home">Brand</Navbar.Brand>
+                <Navbar.Brand href="!#">
+                    <img src={logo} alt="Logo"/>
+                </Navbar.Brand>
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse id="basic-navbar-nav">
                     <Nav className="mr-auto">

@@ -5,6 +5,15 @@
     background-color: $dark-violet;
     padding-top: 0;
     padding-bottom: 0;
+    .container {
+        padding-right: 5px;
+    }
+    .navbar-brand {
+        margin-right: 0;
+        img {
+            width: 135px;
+        }
+    }
     .nav-item {
         .nav-link {
             color: white;
@@ -40,8 +49,10 @@
             }
         }
         .profile-name {
+            width: fit-content;
             .nav-link {
-                margin-left: 0;
+                
+                margin-right: 0;
             }
         }
     }
