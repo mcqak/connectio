@@ -17,13 +17,13 @@ const PageHeader = () => {
             <Container>
                 <div className="nav-panel">
                     <Row className="justify-content-lg-between">
-                        <Col xs={12} md={4} lg={2}>
+                        <Col xs={12} xl={2}>
                             <a className="back-btn" href="!#">
                                 <img src={back} alt="Back"/>
                                 Back to Connectio
                             </a>
                         </Col>
-                        <Col xs={12} md={7} lg={8}>
+                        <Col xs={12} xl={8}>
                             <ul>
                                 <li>
                                     <a href="!#">
@@ -63,7 +63,7 @@ const PageHeader = () => {
                                 </li>
                             </ul>
                         </Col>
-                        <Col className="text-lg-right text-sm-center" xs={12} md={12} lg={2}>
+                        <Col className="text-center" xs={12} xl={2}>
                             <a className="test-audiences" href="!#">Test Audiences</a>
                         </Col>
                         <Col xs={12}>

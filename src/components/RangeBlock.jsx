@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { 
     Row, 
     Col,
@@ -9,35 +9,30 @@ import 'react-rangeslider/lib/index.css'
 
 import '../assets/scss/range.scss'
 
-const RangeBlock = () => {
+const RangeBlock = (props) => {
 
-    const [rangeValue, setRangeValue] = useState(5)
-
-    const handleChange = (value) => {
-        setRangeValue(value)
-    }
-
+    const { rangeValue, setRangeValue } = props;
 
     return (
         <Container>
             <section className="adsets-info-and-range">
                 <Row>
-                    <Col xs={3}>
+                    <Col xs={3} className="adsets-info-wrapper">
                         <div className="adsets-info">
                             <p><span>$15 000</span> campaign budget</p>
                             <p><span>22</span> interests</p>
                         </div>
                     </Col>
-                    <Col xs={6}>
+                    <Col xs={6} className="adsets-range-wrapper">
                         <div className="adsets-range">
                             <Slider 
-                                min={0}
+                                min={1}
                                 max={6}
                                 step={1}
                                 value={rangeValue}
                                 tooltip={false}
-                                handleLabel={rangeValue}
-                                onChange={handleChange}
+                                handleLabel={rangeValue.toString()}
+                                onChange={(value) => setRangeValue(value)}
                             />
                         </div>
                     </Col>

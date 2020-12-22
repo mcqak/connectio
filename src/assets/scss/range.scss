@@ -105,4 +105,42 @@
 
 
 
+@media (max-width: 768px) {
+    .create-adsets-btn-wrapper {
+        button {
+            width: 100px;
+        }
+    }
+
+    .adsets-info-wrapper,
+    .adsets-range-wrapper {
+        padding-left: 0;
+    }
+
+    .adsets-info {
+        p {
+            font-size: 10px;
+            font-weight: 600;
+        }
+    }
+
+    .adsets-range {
+        padding-right: 15px;
+    }
+}
+
+
+
+
+@media (max-width: 450px) {
+    .create-adsets-btn-wrapper {
+        button {
+            width: 80px;
+            font-size: 11px;
+        }
+    }
+}
+
+
+
 

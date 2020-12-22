@@ -5,10 +5,12 @@
     margin-bottom: 45px;
 }
 
+
 .adset-card {
     width: 254px;
     box-shadow: 0px 4px 10px rgba(150, 117, 206, 0.1);
     border-radius: 5px;
+    margin: 0 auto 35px auto;
     .card-header {
         display: flex;
         justify-content: space-between;
@@ -65,5 +67,13 @@
             width: 13px;
             height: 13px;
         }
+    }
+}
+
+
+
+@media (max-width: 768px) {
+    .adset-card {
+        width: 243px;
     }
 }
