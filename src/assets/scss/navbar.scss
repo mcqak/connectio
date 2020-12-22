@@ -26,10 +26,30 @@
             background-color: $light-violet;
         }
     }
+    .collapse{
+        & > a {
+            padding-left: 10px;
+            padding-right: 10px;
+            color: $light-gray;
+            &:last-of-type {
+                div {
+                    background-color: #BE545E;
+                    width: 20px;
+                    height: 20px;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    border-radius: 50%;
+                    font-size: 13px;
+                }
+            }
+        }
+    }
     .greetings {
         display: inline-flex;
         align-items: center;
         color: $light-gray;
+        margin-left: 10px;
     }
     .profile-name {
         .nav-link {

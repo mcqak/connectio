@@ -42,6 +42,9 @@ const MainNav = () => {
                         <NavDropdown.Item href="#action/3.4">Separated link</NavDropdown.Item>
                     </NavDropdown>
                     </Nav>
+                    <Nav.Link href="!#"><i className="fas fa-graduation-cap"></i></Nav.Link>
+                    <Nav.Link href="!#"><i className="fas fa-share"></i></Nav.Link>
+                    <Nav.Link href="!#"><div>6</div></Nav.Link>
                     <Nav>
                         <span className="greetings">Hello</span>
                         <NavDropdown className="profile-name" title="Michael" id="basic-nav-dropdown">
