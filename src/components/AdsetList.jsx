@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { 
     Container,
     Card,
@@ -7,92 +7,191 @@ import {
     Row,
     Col
 } from 'react-bootstrap';
+import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
+import { v4 as uuidv4 } from 'uuid';
 
 import '../assets/scss/adsetlist.scss';
 
 import deleteIcon from '../assets/img/delete.png';
 
+import { usePrevious } from '../hooks/customHooks'
+
+
 const AdsetList = (props) => {
+
+    const adsets = [
+        {id: uuidv4(), name: 'World', value: 125},
+        {id: uuidv4(), name: 'Cup', value: 125},
+        {id: uuidv4(), name: 'House', value: 452},
+        {id: uuidv4(), name: 'Numbers', value: 340},
+        {id: uuidv4(), name: 'Hero', value: 452},
+        {id: uuidv4(), name: 'Band', value: 340},
+        {id: uuidv4(), name: 'Hetzner', value: 125},
+        {id: uuidv4(), name: 'Minimal', value: 125},
+        {id: uuidv4(), name: 'Digital', value: 452},
+        {id: uuidv4(), name: 'Maos', value: 452},
+        {id: uuidv4(), name: 'Cats', value: 340},
+        {id: uuidv4(), name: 'Soft', value: 340},
+        {id: uuidv4(), name: 'Samsung', value: 125},
+        {id: uuidv4(), name: 'Students', value: 125},
+        {id: uuidv4(), name: 'Cola', value: 452},
+        {id: uuidv4(), name: 'Sprite', value: 340},
+        {id: uuidv4(), name: 'Tea', value: 340},
+        {id: uuidv4(), name: 'Coffee', value: 340}
+    ]
 
     const { rangeValue } = props;
 
-    let adset = {
-        'World': 125,
-        'Cup': 125,
-        'House': 452,
-        'Numbers': 340,
-        'Hero': 452,
-        'Band': 340,
-        'Hetzner': 125,
-        'Minimal': 125,
-        'Digital': 452,
-        'Maos': 452,
-        'Cats': 340,
-        'Soft': 340,
-        'Samsung': 125,
-        'Students': 125,
-        'Cola': 452,
-        'Sprite': 340,
-        'Tea': 340,
-        'Coffee': 340
-    }
+    const [adsetsArray, setAdsets] = useState([])
 
-    const numberOfAdsets = Math.floor(Object.keys(adset).length);
-    const itemsPerAdset = Math.floor(numberOfAdsets / rangeValue);
-    const residual = numberOfAdsets % rangeValue;
-    let adsetsArray = [];
-    console.log(itemsPerAdset)
-    for (let i = 0; i < rangeValue; i++) {
-        const slicedArray = Object.entries(adset).slice(i * itemsPerAdset, i * itemsPerAdset + itemsPerAdset);
-        if (slicedArray.length) {
-            adsetsArray.push(slicedArray)
-        }
-    }
-    if (residual) {
-        let count = 0;
-        for (let i = numberOfAdsets - residual; i < numberOfAdsets; i++) {
-            adsetsArray[count].push(Object.entries(adset)[i])
-            count++;
-        }
-    }
+    const prevAdsets = usePrevious(adsetsArray);
 
+    useEffect(() => {
+        if (prevAdsets === adsetsArray || !adsetsArray.length) {
+            const numberOfAdsets = Math.floor(adsets.length);
+            const itemsPerAdset = Math.floor(numberOfAdsets / rangeValue);
+            const residual = numberOfAdsets % rangeValue;
+            let tempArray = [];
+    
+            for (let i = 0; i < rangeValue; i++) {
+                const slicedArray = adsets.slice(i * itemsPerAdset, i * itemsPerAdset + itemsPerAdset);
+                if (slicedArray.length) {
+                    tempArray.push(slicedArray);
+                }
+            }
+
+            if (residual) {
+                let count = 0;
+                for (let i = numberOfAdsets - residual; i < numberOfAdsets; i++) {
+                    tempArray[count].push(adsets[i])
+                    count++;
+                }
+            }
+            setAdsets(tempArray);
+        }
+    })
+
+    const move = (source, destination, droppableSource, droppableDestination) => {
+        const sourceClone = Array.from(source);
+        const destClone = Array.from(destination);
+        const [removed] = sourceClone.splice(droppableSource.index, 1);
+    
+        destClone.splice(droppableDestination.index, 0, removed);
+    
+        const result = {};
+        result['source'] = sourceClone;
+        result['destination'] = destClone;
+
+        return result;
+    };
+
+    const reorder = (list, startIndex, endIndex) => {
+        const result = Array.from(list);
+        const [removed] = result.splice(startIndex, 1);
+        result.splice(endIndex, 0, removed);
+        return result;
+    };
+
+    const getItemStyle = (isDragging, draggableStyle) => ({
+        background: isDragging ? '#484A54' : 'white',
+        ...draggableStyle
+    });
+
+    const getListStyle = (isDraggingOver) => ({
+        boxShadow: isDraggingOver ? "0px 0px 0px 2px #9176C8" : 'none',
+        paddingBottom : isDraggingOver ? '50px' : '0'
+    });
+
+    const onDragEnd = (result) => {
+        const { source, destination } = result;
+        console.log(source, destination)
+
+        // dropped outside the list
+        if (!destination) {
+            return;
+        } if (source.droppableId === destination.droppableId) {
+            const items = reorder(
+                adsetsArray[parseInt(source.droppableId)],
+                source.index,
+                destination.index
+            );
+            let cloneAdsetsArray = Array.from(adsetsArray);
+            cloneAdsetsArray[parseInt(source.droppableId)] = items;
+            console.log(cloneAdsetsArray)
+            setAdsets(cloneAdsetsArray);
+        } else {
+            const result = move(
+                adsetsArray[parseInt(source.droppableId)],
+                adsetsArray[parseInt(destination.droppableId)],
+                source,
+                destination
+            );
+
+            let cloneAdsetsArray = Array.from(adsetsArray);
+            cloneAdsetsArray[parseInt(source.droppableId)] = result.source;
+            cloneAdsetsArray[parseInt(destination.droppableId)] = result.destination;
+
+            setAdsets(cloneAdsetsArray);
+        }
+    };
     console.log(adsetsArray)
-
     return (
-        <Container>
-            <section className="adset-list">
-                <Row className="justify-content-center justify-content-lg-start">
-                    {adsetsArray && adsetsArray.map((adset, index) => {
-                        return (
-                            <Col key={index} xs={12} sm={6} lg={4} xl={3}>
-                                <Card className="adset-card">
-                                    <Card.Header>
-                                        <Card.Title>
-                                            <h2>Test Adset {index + 1}</h2>
-                                        </Card.Title>
-                                        <i className="fas fa-ellipsis-h"></i>
-                                    </Card.Header>
-                                    <Card.Body>
-                                        <ListGroup className="list-group-flush">
-                                            { adset && adset.map((item, index) => {
-                                                return (
-                                                    <ListGroupItem key={index}>
-                                                        <i className="fas fa-ellipsis-v"></i>
-                                                        <span className="name">{item[0]}</span> 
-                                                        <span className="value">{item[1]}</span>
-                                                        <img src={deleteIcon} alt="Delete"/>
-                                                    </ListGroupItem>
-                                                )
-                                            })}
-                                        </ListGroup>
-                                    </Card.Body>
-                                </Card>
-                            </Col>
-                        )
-                    })}
-                </Row>
-            </section>
-        </Container>
+        <DragDropContext onDragEnd={onDragEnd}>
+            <Container>
+                <section className="adset-list">
+                    <Row className="justify-content-center justify-content-lg-start">
+                        {adsetsArray && adsetsArray.map((adset, index) => {
+                            return (
+                                <Col key={index} xs={12} sm={6} lg={4} xl={3}>
+                                    <Droppable droppableId={index.toString()}>
+                                        { (provided, snapshot) => (
+                                            <Card className="adset-card" style={getListStyle(snapshot.isDraggingOver)}>
+                                                <Card.Header>
+                                                    <Card.Title>
+                                                        <h2>Test Adset {index + 1}</h2>
+                                                    </Card.Title>
+                                                    <i className="fas fa-ellipsis-h"></i>
+                                                </Card.Header>
+                                                <Card.Body ref={provided.innerRef}>
+                                                    <ListGroup className="list-group-flush">
+                                                        { adset && adset.map((item, index) => {
+                                                            return (
+                                                                <Draggable 
+                                                                    draggableId={item.id} 
+                                                                    index={index}
+                                                                    key={item.id}
+                                                                >
+                                                                    { (provided, snapshot) => (
+                                                                        <ListGroupItem
+                                                                            ref={provided.innerRef}
+                                                                            {...provided.draggableProps}
+                                                                            {...provided.dragHandleProps}
+                                                                            style={getItemStyle(
+                                                                                snapshot.isDragging,
+                                                                                provided.draggableProps.style
+                                                                            )}
+                                                                        >
+                                                                            <i style={snapshot.isDragging ? {color: 'white'} : {}} className="fas fa-ellipsis-v"></i>
+                                                                            <span style={snapshot.isDragging ? {color: 'white'} : {}} className="name">{item.name}</span> 
+                                                                            <span style={snapshot.isDragging ? {color: 'white'} : {}} className="value">{item.value}</span>
+                                                                            <img src={deleteIcon} alt="Delete"/>
+                                                                        </ListGroupItem>
+                                                                    )}
+                                                                </Draggable>
+                                                            )
+                                                        })}
+                                                    </ListGroup>
+                                                </Card.Body>
+                                            </Card>
+                                        )}
+                                    </Droppable>
+                                </Col>
+                            )
+                        })}
+                    </Row>
+                </section>
+            </Container>
+        </DragDropContext>
     )
 }
 
