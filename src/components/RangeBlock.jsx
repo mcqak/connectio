@@ -13,6 +13,23 @@ const RangeBlock = (props) => {
 
     const { rangeValue, setRangeValue } = props;
 
+    const rangeLabels = {
+        1: '1', 
+        2: '2', 
+        3: '3', 
+        4: "4", 
+        5: '5', 
+        6: '6'
+    }
+
+    const createScale = () => {
+        let scale = [];
+        for (let i = 0; i < 60; i++) {
+            scale.push(<div className="vertical-line"></div>)
+        }
+        return scale;
+    }
+
     return (
         <Container>
             <section className="adsets-info-and-range">
@@ -33,7 +50,11 @@ const RangeBlock = (props) => {
                                 tooltip={false}
                                 handleLabel={rangeValue.toString()}
                                 onChange={(value) => setRangeValue(value)}
+                                labels={rangeLabels}
                             />
+                            <div className="scale">
+                                { createScale() }
+                            </div>
                         </div>
                     </Col>
                     <Col xs={3}>

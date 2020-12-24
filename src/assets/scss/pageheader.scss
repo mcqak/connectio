@@ -34,6 +34,7 @@
                 height: 25px;
                 background-color: white;
                 border-radius: 40px;
+                z-index: 2;
                 a {
                     width: fit-content;
                     display: flex;
@@ -96,6 +97,22 @@
     }
 }
 
+
+@media (min-width: 1200px) {
+    .header-links-wrapper {
+        position: relative;
+    }
+    .line-through {
+        background-color: #F2F4FF;
+        width: 80%;
+        height: 4px;
+        position: absolute;
+        top: 10px;
+        margin-left: 50px;
+        margin-right: 50px;
+        z-index: 1;
+    }
+}
 
 
 @media (max-width: 1199px) {

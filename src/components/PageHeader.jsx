@@ -23,7 +23,7 @@ const PageHeader = () => {
                                 Back to Connectio
                             </a>
                         </Col>
-                        <Col xs={12} xl={8}>
+                        <Col className="header-links-wrapper" xs={12} xl={8}>
                             <ul>
                                 <li>
                                     <a href="!#">
@@ -62,6 +62,7 @@ const PageHeader = () => {
                                     </a>
                                 </li>
                             </ul>
+                            <div className="line-through"></div>
                         </Col>
                         <Col className="text-center" xs={12} xl={2}>
                             <a className="test-audiences" href="!#">Test Audiences</a>

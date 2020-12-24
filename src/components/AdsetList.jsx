@@ -45,7 +45,8 @@ const AdsetList = (props) => {
     const [adsetsArray, setAdsets] = useState([])
 
     const prevAdsets = usePrevious(adsetsArray);
-
+    
+    // eslint-disable-next-line
     useEffect(() => {
         if (prevAdsets === adsetsArray || !adsetsArray.length) {
             const numberOfAdsets = Math.floor(adsets.length);
@@ -98,45 +99,59 @@ const AdsetList = (props) => {
     });
 
     const getListStyle = (isDraggingOver) => ({
-        boxShadow: isDraggingOver ? "0px 0px 0px 2px #9176C8" : 'none',
         paddingBottom : isDraggingOver ? '50px' : '0'
     });
 
-    const onDragEnd = (result) => {
-        const { source, destination } = result;
-        console.log(source, destination)
+    const onDragStart = (result) => {
+        console.log(result)
+        let cards = document.querySelectorAll('.adset-card');
+        cards.forEach((card, index) => {
+            if (parseInt(result.source.droppableId) !== index) {
+                card.classList.add('drag-mode')
+            }
+        })
+    }
 
-        // dropped outside the list
+    const onDragEnd = (result) => {
+        
+        const { source, destination } = result;
+        const sourceId = parseInt(source.droppableId);
+        const destId = parseInt(destination.droppableId);
+
+        let cards = document.querySelectorAll('.adset-card');
+        cards.forEach(card => {
+            card.classList.remove('drag-mode')
+        })
+
         if (!destination) {
             return;
         } if (source.droppableId === destination.droppableId) {
             const items = reorder(
-                adsetsArray[parseInt(source.droppableId)],
+                adsetsArray[sourceId],
                 source.index,
                 destination.index
             );
             let cloneAdsetsArray = Array.from(adsetsArray);
-            cloneAdsetsArray[parseInt(source.droppableId)] = items;
-            console.log(cloneAdsetsArray)
+            cloneAdsetsArray[sourceId] = items;
             setAdsets(cloneAdsetsArray);
         } else {
             const result = move(
-                adsetsArray[parseInt(source.droppableId)],
-                adsetsArray[parseInt(destination.droppableId)],
+                adsetsArray[sourceId],
+                adsetsArray[destId],
                 source,
                 destination
             );
 
             let cloneAdsetsArray = Array.from(adsetsArray);
-            cloneAdsetsArray[parseInt(source.droppableId)] = result.source;
-            cloneAdsetsArray[parseInt(destination.droppableId)] = result.destination;
+            cloneAdsetsArray[sourceId] = result.source;
+            cloneAdsetsArray[destId] = result.destination;
 
             setAdsets(cloneAdsetsArray);
         }
     };
-    console.log(adsetsArray)
+
     return (
-        <DragDropContext onDragEnd={onDragEnd}>
+        <DragDropContext onDragStart={onDragStart} onDragEnd={onDragEnd}>
             <Container>
                 <section className="adset-list">
                     <Row className="justify-content-center justify-content-lg-start">
