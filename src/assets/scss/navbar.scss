@@ -45,6 +45,54 @@
             }
         }
     }
+    .dropdown-item {
+        width: 335px;
+        padding-left: 60px;
+        height: 71px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        &.search {
+            background-image: url("../img/search-violet.png");
+            background-position: 20px 50%;
+            background-repeat: no-repeat;
+            &.active {
+                background-image: url("../img/search-white.png");
+            }
+        }
+        &.projects {
+            background-image: url("../img/projects-violet.png");
+            background-position: 20px 50%;
+            background-repeat: no-repeat;
+            &.active {
+                background-image: url("../img/projects-white.png");
+            }
+        }
+        &.persets {
+            background-image: url("../img/persets-violet.png");
+            background-position: 20px 50%;
+            background-repeat: no-repeat;
+            &.active {
+                background-image: url("../img/persets-white.png");
+            }
+        }
+        &.active {
+            background-color: $light-violet;
+            span,
+            small {
+                color: white;
+            }
+        }
+        span {
+            font-weight: 600;
+            font-size: 14px;
+            color: $light-violet;
+        }
+        small {
+            font-size: 9px;
+            color: $light-violet;
+        }
+    }
     .greetings {
         display: inline-flex;
         align-items: center;
@@ -91,28 +139,7 @@
     }
 
     .navbar-collapse {
-        position: absolute;
-        top: 54px;
-        right: 0;
-        padding-bottom: 15px;
-        width: 150px;
-        display: block;
-        background-color: $dark-violet;
-        z-index: 99;
-        height: 100vh;
-    }
-    .navbar-collapse.collapsing {
-        height: auto !important;
-        margin-left: 50%;
-        left: 50%;
-    }
-    .navbar-collapse.show {
-        right: 0;
-    }
-    .collapse{
-        & > a {
-            padding-left: 50px !important;
-        }
+        transition: 0s;
     }
 }
 

@@ -11,7 +11,8 @@ import checklist from '../assets/img/checklist.png'
 
 import '../assets/scss/pageheader.scss'
 
-const PageHeader = () => {
+const PageHeader = (props) => {
+
     return (
         <section className="page-header">
             <Container>
@@ -75,7 +76,7 @@ const PageHeader = () => {
                                     <img src={shuffle} alt="Shuffle"/>
                                     Shuffle Audiences
                                 </button>
-                                <button>
+                                <button onClick={() => props.undo()}>
                                     <img src={back_dot} alt="Back"/>
                                     Undo
                                 </button>

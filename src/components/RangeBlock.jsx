@@ -25,7 +25,7 @@ const RangeBlock = (props) => {
     const createScale = () => {
         let scale = [];
         for (let i = 0; i < 60; i++) {
-            scale.push(<div className="vertical-line"></div>)
+            scale.push(<div key={i} className="vertical-line"></div>)
         }
         return scale;
     }

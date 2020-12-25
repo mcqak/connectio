@@ -103,7 +103,6 @@ const AdsetList = (props) => {
     });
 
     const onDragStart = (result) => {
-        console.log(result)
         let cards = document.querySelectorAll('.adset-card');
         cards.forEach((card, index) => {
             if (parseInt(result.source.droppableId) !== index) {

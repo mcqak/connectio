@@ -8,9 +8,18 @@ import {
 
 import '../assets/scss/navbar.scss'
 
-import logo from '../assets/img/connectio-logo.png'
+import logo from '../assets/img/connectio-logo.png';
 
 const MainNav = () => {
+
+    const handleMouseOver = (e) => {
+        e.currentTarget.classList.add('active')
+    }
+
+    const handleMouseLeave = (e) => {
+        e.currentTarget.classList.remove('active')
+    }
+
     return (
         <Navbar variant="dark" expand="lg">
             <Container>
@@ -28,11 +37,18 @@ const MainNav = () => {
                         <NavDropdown.Item href="#action/3.4">Separated link</NavDropdown.Item>
                     </NavDropdown>
                     <NavDropdown className="active" title="Audiences" id="basic-nav-dropdown">
-                        <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
-                        <NavDropdown.Item href="#action/3.2">Another action</NavDropdown.Item>
-                        <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
-                        <NavDropdown.Divider />
-                        <NavDropdown.Item href="#action/3.4">Separated link</NavDropdown.Item>
+                        <NavDropdown.Item className="search" onMouseLeave={handleMouseLeave} onMouseOver={handleMouseOver} href="!#">
+                            <span>Audience search</span>
+                            <small>Find an audience on Facebook to target your ads with.</small>
+                        </NavDropdown.Item>
+                        <NavDropdown.Item className="projects" onMouseLeave={handleMouseLeave} onMouseOver={handleMouseOver} href="!#">
+                            <span>Manage projects</span>
+                            <small>Manage the Facebook audiences you’ve discovered.</small>
+                        </NavDropdown.Item>
+                        <NavDropdown.Item className="persets" onMouseLeave={handleMouseLeave} onMouseOver={handleMouseOver} href="!#">
+                            <span>Manage persets</span>
+                            <small>Manage standard and custom presets</small>
+                        </NavDropdown.Item>
                     </NavDropdown>
                     <NavDropdown title="Automate" id="basic-nav-dropdown">
                         <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
