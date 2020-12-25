@@ -140,6 +140,21 @@
 
     .navbar-collapse {
         transition: 0s;
+        > .nav-link {
+            margin-left: 10px;
+        }
+    }
+
+    .navbar-nav {
+        .dropdown-menu {
+            width: 300px;
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%)
+        }
+        .dropdown-item {
+            width: 100%;
+        }
     }
 }
 
